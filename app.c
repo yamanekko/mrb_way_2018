@@ -5,6 +5,7 @@
  ** 概要 : 2輪倒立振子ライントレースロボットのTOPPERS/HRP2用Cサンプルプログラム
  **
  ** 注記 : sample_c4 (sample_c3にBluetooth通信リモートスタート機能を追加)
+ ** 	  C用のサンプルコードsample_c4をmrubyに移植し、Ruby向けに調整
  ******************************************************************************
  **/
 
@@ -31,27 +32,10 @@
 #define _debug(x)
 #endif
 
-/* 下記のマクロは個体/環境に合わせて変更する必要があります */
-#define GYRO_OFFSET  0          /* ジャイロセンサオフセット値(角速度0[deg/sec]時) */
-#define LIGHT_WHITE  40         /* 白色の光センサ値 */
-#define LIGHT_BLACK  0          /* 黒色の光センサ値 */
-#define SONAR_ALERT_DISTANCE 30 /* 超音波センサによる障害物検知距離[cm] */
-#define TAIL_ANGLE_STAND_UP  93 /* 尻尾でささえてる状態の角度[度] */
-#define TAIL_ANGLE_DRIVE      3 /* 尻尾があがっている状態の角度[度] */
-#define P_GAIN             2.5F /* 完全停止用モータ制御比例係数 */
-#define PWM_ABS_MAX          60 /* 完全停止用モータ制御PWM絶対最大値 */
-//#define DEVICE_NAME     "ET0"  /* Bluetooth名 hrp2/target/ev3.h BLUETOOTH_LOCAL_NAMEで設定 */
-//#define PASS_KEY        "1234" /* パスキー    hrp2/target/ev3.h BLUETOOTH_PIN_CODEで設定 */
-#define CMD_START         '1'    /* リモートスタートコマンド */
-
 /* LCDフォントサイズ */
 #define CALIB_FONT (EV3_FONT_SMALL)
 #define CALIB_FONT_WIDTH (6/*TODO: magic number*/)
 #define CALIB_FONT_HEIGHT (8/*TODO: magic number*/)
-
-/* 関数プロトタイプ宣言 */	// 現状、しっぽもソナーも使ってない
-//static int sonar_alert(void);
-//static void tail_control(signed int angle);
 
 /* void* */
 /* mrb_tlsf_allocf(mrb_state *mrb, void *p, size_t size, void *ud) */
@@ -112,10 +96,6 @@ void main_task(intptr_t unused)
 		     }
 		 }
      }
-
-     /* LCD画面にログを表示 */
-//      ev3_lcd_fill_rect(0, 0, EV3_LCD_WIDTH, EV3_LCD_HEIGHT, EV3_LCD_WHITE);
-//      ev3_lcd_draw_string("EV3way-ET step 4", 0, CALIB_FONT_HEIGHT*1);
 
     mrb_close(mrb);
     ext_tsk();
