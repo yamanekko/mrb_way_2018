@@ -38,6 +38,7 @@ tailMotor = EV3RT::TailMotor.new(EV3RT::PORT_A, EV3RT::LARGE_MOTOR)
 tailMotor.p_gain = P_GAIN
 tailMotor.pwm_abs_max = PWM_ABS_MAX
 clock = EV3RT::Clock.new()
+balancer = EV3RT::Balancer.new()
 
 #走行モータエンコーダリセット
 leftMotor.reset
@@ -45,9 +46,6 @@ rightMotor.reset
 
 #ジャイロセンサリセット
 gyroSensor.reset
-
-#バランサリセット
-EV3RT::Balancer.reset
 
 #走行可能(LEDは緑)
 led.on(EV3RT::LED_GREEN)
@@ -71,12 +69,12 @@ loop do
    gyro = -1 * gyroSensor.rate	#ジャイロセンサーの向きが逆のため符号反転
    volt = EV3RT::Battery.batteryVoltage
 
-   pwm_left, pwm_right = EV3RT::Balancer.calculate(forward, turn, gyro, GYRO_OFFSET,
+   pwm_left, pwm_right = balancer.calculate(forward, turn, gyro, GYRO_OFFSET,
                                             leftMotorAngle, rightMotorAngle, volt)
    leftMotor.pwm = pwm_left
    rightMotor.pwm = pwm_right
 
-	msg = "time:#{clock.now},c:#{color},g:#{gyro},rm:#{rightMotorAngle},lm:#{leftMotorAngle},lpwm:#{pwm_left},rpwm:#{pwm_right},v:#{volt}\r\n"
+	msg = "time:#{clock.now},c:#{color},g:#{gyro},rm:#{rightMotorAngle},lm:#{leftMotorAngle},rpwm:#{pwm_right},lpwm:#{pwm_left},v:#{volt}\r\n"
 	log(logger, msg)
 
 	EV3RT::Task.sleep
