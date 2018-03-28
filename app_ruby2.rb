@@ -42,11 +42,12 @@ led.on(EV3RT::LED_ORANGE)
 # 初期処理だけして寝かす
 EV3RT::Task.active(EV3RT::BALANCE_TASK_ID)
 
-EV3RT::LCD.print("EV3way sample mruby cyclick ver.")
+EV3RT::LCD.print("EV3way 2018 sample mruby cyclick ver!!!.")
 
 # スタート待機
-loop do
-#  tailMotor.control(TAIL_ANGLE_DOWN)
+#loop do
+while true
+	#  tailMotor.control(TAIL_ANGLE_DOWN)
 
   if touchSensor.pressed?
     break
