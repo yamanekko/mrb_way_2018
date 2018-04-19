@@ -7,7 +7,7 @@ TAIL_ANGLE_DOWN = 93	# 尻尾を下げた状態のときの角度[度]
 #TAIL_ANGLE_DOWN = 80	# 尻尾を下げた状態のときの角度[度]
 TAIL_ANGLE_UP = 3	# 尻尾を上げた状態のときの角度[度]
 GYRO_OFFSET = 0         # ジャイロセンサオフセット値(角速度0[deg/sec]時)
-LIGHT_WHITE = 40	# 白色の光センサ値
+LIGHT_WHITE = 55	# 白色の光センサ値
 LIGHT_BLACK = 0		# 黒色の光センサ値
 
 P_GAIN = 2.5            # 完全停止用モータ制御比例係数
@@ -54,7 +54,8 @@ balancer.right_motor = rightMotor
 balancer.left_motor = leftMotor
 balancer.gyro = gyroSensor
 balancer.reset
-balancer.gyro_direction = -1	# ジャイロセンサーが逆向きのため。通常は省略可
+# balancer.gyro_direction = -1	# ジャイロセンサーが逆向きのため。通常は省略可
+balancer.gyro_direction = 1	# ジャイロセンサーが逆向きのため。通常は省略可
 
 #走行可能(LEDは緑)
 led.on(EV3RT::LED_GREEN)
